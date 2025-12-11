@@ -1,0 +1,9 @@
+.Header {
+    height: 12vh;
+    background-color: rgb(121, 121, 121);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-family: 'Josefin Sans';
+    font-size: 1.2rem;
+}

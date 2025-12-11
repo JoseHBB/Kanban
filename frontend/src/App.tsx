@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { DndContext, type DragEndEvent } from '@dnd-kit/core'
+import { useState } from 'react';
+
+import {Draggable} from './Draggable';
+import {Droppable} from './Droppable';
+
+import { Header } from './Header.tsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isDropped, setIsDropped] = useState(false)
+  const draggableMarkup = (
+    <Draggable id='draggable-1'>Drag Me</Draggable>
+  )
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <> 
+      <Header></Header>
+      <DndContext onDragEnd={handleDragEnd}>
+        {!isDropped ? draggableMarkup : null}
+        <Droppable id='droppable-1'>
+          {isDropped ? draggableMarkup : 'Drop Here'}
+        </Droppable>
+      </DndContext>
     </>
   )
+
+  function handleDragEnd(event : DragEndEvent) {
+    if (event.over && event.over.id === 'droppable-1') {
+      setIsDropped(true);
+    }
+  }
 }
 
 export default App
